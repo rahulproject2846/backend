@@ -13,9 +13,7 @@ const authRouter = require('./routes/authRoute');
 const messengerRoute = require('./routes/messengerRoute');
 //const path = require('path');
 
-dotenv.config({
-    path: 'backend/config/config.env'
-})
+dotenv.config()
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
