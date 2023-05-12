@@ -138,11 +138,6 @@ const PORT = process.env.PORT
 server.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
 })
-
-// {
-//     "client": "npm start --prefix frontend",
-//     "clientInstall": "npm install --prefix frontend",
-//     "build": "npm run build --prefix frontend",
-//     "heroku-postbuild": "npm run clientInstall && npm run build",
-//     "dev": "concurrently \" npm run server \" \" npm run client \""
-// }
+// "engines": {
+//     "node": "18.x"
+//   },
