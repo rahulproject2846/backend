@@ -130,7 +130,7 @@ io.on('connection', (socket) => {
 // }
 
 app.get('/', (req, res) => {
-    return res.status({ message: 'server is running' })
+    return res.status(200).json({ message: 'server is running' })
 })
 
 const PORT = process.env.PORT
