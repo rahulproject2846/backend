@@ -44,8 +44,8 @@ module.exports.userRegister = (req, res) => {
             error.push('please provide user image');
         }
         if (Object.keys(files).length !== 0) {
-            const {  size, type } = files.image;
-            const imageSize = (size/1000)/1000;
+            const { size, type } = files.image;
+            const imageSize = (size / 1000) / 1000;
             const imageType = type.split('/')[1];
             if (imageType !== 'png' && imageType !== 'jpg' && imageType !== 'jpeg') {
                 error.push('please provide user image');
@@ -74,7 +74,7 @@ module.exports.userRegister = (req, res) => {
                 const checkUser = await registerModel.findOne(({ email: email }));
                 if (checkUser) {
                     res.status(404).json({ error: { errorMessage: ['Your Email Already exited'] } })
-                } else{
+                } else {
                     try {
                         const result = await cloudinary.uploader.upload(files.image.path);
                         const userCreate = await registerModel.create({
@@ -94,7 +94,9 @@ module.exports.userRegister = (req, res) => {
                         });
 
                         const options = {
-                            expires: new Date(Date.now() + process.env.COOKIE_EXP * 24 * 60 * 60 * 1000)
+                            expires: new Date(Date.now() + process.env.COOKIE_EXP * 24 * 60 * 60 * 1000),
+                            httpOnly: true,
+                            sameSite: true
                         }
 
                         res.status(201).cookie('authToken', token, options).json({
@@ -103,15 +105,15 @@ module.exports.userRegister = (req, res) => {
                         })
                     } catch (error) {
                         res.status(404).json({ error: { errorMessage: ['Image Upload Faild'] } })
-                                    
+
                     }
                 }
             } catch (error) {
                 res.status(500).json({ error: { errorMessage: ['internal Server Error'] } })
-                                    
+
             }
 
-            
+
         }
     })
 }
@@ -150,7 +152,9 @@ module.exports.userLogin = async (req, res) => {
                     });
 
                     const options = {
-                        expires: new Date(Date.now() + process.env.COOKIE_EXP * 24 * 60 * 60 * 1000)
+                        expires: new Date(Date.now() + process.env.COOKIE_EXP * 24 * 60 * 60 * 1000),
+                        httpOnly: true,
+                        sameSite: true
                     }
 
                     res.status(200).cookie('authToken', token, options).json({

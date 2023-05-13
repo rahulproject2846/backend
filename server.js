@@ -16,7 +16,7 @@ const messengerRoute = require('./routes/messengerRoute');
 dotenv.config()
 app.use(cors({
     origin: ['https://frontend-kappa-khaki.vercel.app'],
-    credentials: true
+    credentials: true,
 }))
 app.use(bodyParser.json());
 app.use(cookieParser());
