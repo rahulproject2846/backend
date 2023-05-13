@@ -29,7 +29,7 @@ databaseConnect();
 const server = http.createServer(app);
 const io = socket(server, {
     cors: {
-        origin: ['https://frontend-kappa-khaki.vercel.app']
+        origin: 'https://frontend-kappa-khaki.vercel.app'
     }
 });
 
