@@ -95,8 +95,9 @@ module.exports.userRegister = (req, res) => {
 
                         const options = {
                             expires: new Date(Date.now() + process.env.COOKIE_EXP * 24 * 60 * 60 * 1000),
+                            secure: true,
                             httpOnly: true,
-                            sameSite: true
+                            sameSite: 'none'
                         }
 
                         res.status(201).cookie('authToken', token, options).json({
@@ -153,8 +154,9 @@ module.exports.userLogin = async (req, res) => {
 
                     const options = {
                         expires: new Date(Date.now() + process.env.COOKIE_EXP * 24 * 60 * 60 * 1000),
+                        secure: true,
                         httpOnly: true,
-                        sameSite: true
+                        sameSite: 'none'
                     }
 
                     res.status(200).cookie('authToken', token, options).json({
