@@ -1,3 +1,5 @@
+const local = 'http://localhost:3000'
+const production = 'https://frontend-kappa-khaki.vercel.app'
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
@@ -15,7 +17,7 @@ const messengerRoute = require('./routes/messengerRoute');
 
 dotenv.config()
 app.use(cors({
-    origin: ['https://frontend-kappa-khaki.vercel.app'],
+    origin: [production],
     credentials: true,
 }))
 app.use(bodyParser.json());
@@ -29,8 +31,8 @@ databaseConnect();
 const server = http.createServer(app);
 const io = socket(server, {
     cors: {
-        origin: 'https://frontend-kappa-khaki.vercel.app',
-        credentials : true
+        origin: production,
+        credentials: true
     }
 });
 
