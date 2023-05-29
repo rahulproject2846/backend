@@ -31,7 +31,7 @@ databaseConnect();
 const server = http.createServer(app);
 const io = socket(server, {
     cors: {
-        origin: [production],
+        origin: "*",
         credentials: true
     }
 });
