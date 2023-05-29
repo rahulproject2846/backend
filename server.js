@@ -17,7 +17,7 @@ const messengerRoute = require('./routes/messengerRoute');
 
 dotenv.config()
 app.use(cors({
-    origin: [production],
+    origin: production,
     credentials: true,
 }))
 app.use(bodyParser.json());
@@ -31,7 +31,7 @@ databaseConnect();
 const server = http.createServer(app);
 const io = socket(server, {
     cors: {
-        origin: "*",
+        origin: production,
         credentials: true
     }
 });
