@@ -19,7 +19,6 @@ dotenv.config()
 app.use(cors({
     origin: production,
     credentials: true,
-    secure: true,
 }))
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -31,9 +30,9 @@ databaseConnect();
 
 const server = http.createServer(app);
 const io = socket(server, {
-    allowRequest: (req, callback) => {
-        const noOriginHeader = req.headers.origin === undefined;
-        callback(null, noOriginHeader);
+    cors: {
+        origin: production,
+        credentials: true,
     }
 });
 
