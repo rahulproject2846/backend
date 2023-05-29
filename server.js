@@ -31,10 +31,9 @@ databaseConnect();
 
 const server = http.createServer(app);
 const io = socket(server, {
-    cors: {
-        origin: production,
-        credentials: true,
-        methods: ["GET", "POST"],
+    allowRequest: (req, callback) => {
+        const noOriginHeader = req.headers.origin === undefined;
+        callback(null, noOriginHeader);
     }
 });
 
