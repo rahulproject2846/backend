@@ -19,6 +19,7 @@ dotenv.config()
 app.use(cors({
     origin: production,
     credentials: true,
+    secure: true,
 }))
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -32,7 +33,8 @@ const server = http.createServer(app);
 const io = socket(server, {
     cors: {
         origin: production,
-        credentials: true
+        credentials: true,
+        secure: true,
     }
 });
 
