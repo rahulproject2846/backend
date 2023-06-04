@@ -1,5 +1,6 @@
 const local = 'http://localhost:3000'
-const production = 'https://frontend-kappa-khaki.vercel.app'
+//const production = 'https://frontend-kappa-khaki.vercel.app'
+const production  = 'https://647c9ebf5a670c327fc5ed43--wonderful-starship-2a0160.netlify.app'
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
