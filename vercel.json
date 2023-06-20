@@ -4,8 +4,8 @@
         "src": "./server.js",
         "use": "@vercel/node"
     }],
-    "routes": [{
-        "src": "frontend/build/index.html",
-        "dest": "/"
+    "rewrites": [{
+        "source": "/(.*)",
+        "destination": "/"
     }]
 }
