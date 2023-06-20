@@ -138,9 +138,9 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-app.get('/', (req, res) => {
-    return res.status(200).json({ message: 'server is running' })
-})
+// app.get('/', (req, res) => {
+//     return res.status(200).json({ message: 'server is running' })
+// })
 
 const PORT = process.env.PORT
 
