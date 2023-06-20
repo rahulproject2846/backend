@@ -43,18 +43,18 @@ module.exports.userRegister = (req, res) => {
         if (Object.keys(files).length === 0) {
             error.push('please provide user image');
         }
-        if (Object.keys(files).length !== 0) {
-            const { size, type } = files.image;
-            const imageSize = (size / 1000) / 1000;
-            const imageType = type.split('/')[1];
-            if (imageType !== 'png' && imageType !== 'jpg' && imageType !== 'jpeg') {
-                error.push('please provide user image');
-            }
-            if (imageSize > 8) {
-                error.push('please provide user image less then 8 MB');
-            }
+        // if (Object.keys(files).length !== 0) {
+        //     const { size, type } = files.image;
+        //     const imageSize = (size / 1000) / 1000;
+        //     const imageType = type.split('/')[1];
+        //     if (imageType !== 'png' && imageType !== 'jpg' && imageType !== 'jpeg') {
+        //         error.push('please provide user image');
+        //     }
+        //     if (imageSize > 8) {
+        //         error.push('please provide user image less then 8 MB');
+        //     }
 
-        }
+        // }
 
         if (error.length > 0) {
             res.status(400).json({
@@ -76,7 +76,7 @@ module.exports.userRegister = (req, res) => {
                     res.status(404).json({ error: { errorMessage: ['Your Email Already exited'] } })
                 } else {
                     try {
-                        const result = await cloudinary.uploader.upload(files.image.path);
+                        const result = await cloudinary.uploader.upload(files.image.filepath);
                         const userCreate = await registerModel.create({
                             userName,
                             email,
@@ -97,6 +97,7 @@ module.exports.userRegister = (req, res) => {
                             token
                         })
                     } catch (error) {
+                        console.log(error.message)
                         res.status(404).json({ error: { errorMessage: ['Image Upload Faild'] } })
 
                     }

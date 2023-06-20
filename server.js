@@ -1,6 +1,6 @@
-const local = 'http://localhost:3000'
+//const local = 'http://localhost:3000'
 //const production = 'https://frontend-kappa-khaki.vercel.app'
-const production  = 'https://647c9ebf5a670c327fc5ed43--wonderful-starship-2a0160.netlify.app'
+//const production = 'https://647c9ebf5a670c327fc5ed43--wonderful-starship-2a0160.netlify.app'
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
@@ -14,11 +14,11 @@ const socket = require('socket.io');
 const databaseConnect = require('./config/database')
 const authRouter = require('./routes/authRoute');
 const messengerRoute = require('./routes/messengerRoute');
-//const path = require('path');
+const path = require('path');
 
 dotenv.config()
 app.use(cors({
-    origin: production,
+    //origin: production,
     credentials: true,
 }))
 app.use(bodyParser.json());
@@ -30,12 +30,14 @@ app.use('/api/messenger', messengerRoute);
 databaseConnect();
 
 const server = http.createServer(app);
-const io = socket(server, {
-    cors: {
-        origin: production,
-        credentials: true,
-    }
-});
+const io = socket(server);
+
+// const io = socket(server, {
+//     cors: {
+//         origin: production,
+//         credentials: true,
+//     }
+// });
 
 let users = [];
 
@@ -125,13 +127,16 @@ io.on('connection', (socket) => {
     })
 })
 
-// if (process.env.NODE_ENV === 'production') {
-//     app.use(express.static(path.join(__dirname, "../frontend/build")));
-//     app.get('*', (req, res) => {
-//         res.sendFile(path.resolve(__dirname, "../", "frontend", "build", "index.html"));
-//     })
-
-// }
+app.use(express.static(path.join(__dirname, "./frontend/build")));
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, "./", "frontend", "build", "index.html"))
+})
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "./frontend/build")));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, "./", "frontend", "build", "index.html"))
+    })
+}
 
 app.get('/', (req, res) => {
     return res.status(200).json({ message: 'server is running' })
@@ -142,6 +147,3 @@ const PORT = process.env.PORT
 server.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
 })
-// "engines": {
-//     "node": "18.x"
-//   },
