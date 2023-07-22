@@ -59,6 +59,13 @@ const alert = useAlert();
 
         dispatch(userRegister(formData));
 
+        setstate({
+            userName:'',
+            email:'',
+            password:'',
+            confirmPassword:'',
+        });
+
     }
 
     useEffect(()=>{

@@ -32,6 +32,10 @@ const Login = ({ history }) => {
         e.preventDefault();
         dispatch(userLogin(state));
         loginSPlay();
+        setState({
+            email:'',
+            password:''
+        });
 
     }
 
