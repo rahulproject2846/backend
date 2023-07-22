@@ -5,27 +5,27 @@ const cloudinary = require('cloudinary').v2;
 const getLastMessage = async (myId, fdId) => {
     const msg = await messageModel.findOne({
         $or: [{
-            $and: [{
-                senderId: {
-                    $eq: myId
-                }
-            }, {
-                reseverId: {
-                    $eq: fdId
-                }
-            }]
-        },
-        {
-            $and: [{
-                senderId: {
-                    $eq: fdId
-                }
-            }, {
-                reseverId: {
-                    $eq: myId
-                }
-            }]
-        }
+                $and: [{
+                    senderId: {
+                        $eq: myId
+                    }
+                }, {
+                    reseverId: {
+                        $eq: fdId
+                    }
+                }]
+            },
+            {
+                $and: [{
+                    senderId: {
+                        $eq: fdId
+                    }
+                }, {
+                    reseverId: {
+                        $eq: myId
+                    }
+                }]
+            }
         ]
     }).sort({
         updatedAt: -1
@@ -100,27 +100,27 @@ module.exports.messageGet = async (req, res) => {
     try {
         let getAllMessage = await messageModel.find({
             $or: [{
-                $and: [{
-                    senderId: {
-                        $eq: myId
-                    }
-                }, {
-                    reseverId: {
-                        $eq: fdId
-                    }
-                }]
-            },
-            {
-                $and: [{
-                    senderId: {
-                        $eq: fdId
-                    }
-                }, {
-                    reseverId: {
-                        $eq: myId
-                    }
-                }]
-            }
+                    $and: [{
+                        senderId: {
+                            $eq: myId
+                        }
+                    }, {
+                        reseverId: {
+                            $eq: fdId
+                        }
+                    }]
+                },
+                {
+                    $and: [{
+                        senderId: {
+                            $eq: fdId
+                        }
+                    }, {
+                        reseverId: {
+                            $eq: myId
+                        }
+                    }]
+                }
             ]
         });
 
@@ -144,7 +144,7 @@ module.exports.ImageMessageSend = (req, res) => {
     const senderId = req.myId;
     const form = formidable();
 
-    form.parse(req, async(err, fields, files) => {
+    form.parse(req, async (err, fields, files) => {
 
         const {
             senderName,
@@ -159,50 +159,47 @@ module.exports.ImageMessageSend = (req, res) => {
             })
         }
         if (Object.keys(files).length !== 0) {
-            const {  size, type } = files.image;
-            const imageSize = (size/1000)/1000;
-            const imageType = type.split('/')[1];
-            if (imageType !== 'png' && imageType !== 'jpg' && imageType !== 'jpeg') {
-                res.status(500).json({
-                    error: {
-                        errorMessage: 'Internal server error'
+            // const {  size, type } = files.image;
+            // const imageSize = (size/1000)/1000;
+            // const imageType = type.split('/')[1];
+            // if (imageType !== 'png' && imageType !== 'jpg' && imageType !== 'jpeg') {
+            //     res.status(500).json({
+            //         error: {
+            //             errorMessage: 'Internal server error'
+            //         }
+            //     })
+            // }
+            // else if (imageSize > 8) {
+            //     res.status(500).json({
+            //         error: {
+            //             errorMessage: 'please provide user image less then 8 MB'
+            //         }
+            //     })
+            // }
+            cloudinary.config({
+                cloud_name: process.env.cloud_name,
+                api_key: process.env.api_key,
+                api_secret: process.env.api_secret,
+                secure: true
+            });
+            try {
+                const result = await cloudinary.uploader.upload(files.image.filepath);
+                const insertMessage = await messageModel.create({
+                    senderId: senderId,
+                    senderName: senderName,
+                    reseverId: reseverId,
+                    message: {
+                        text: '',
+                        image: result.url
                     }
                 })
-            }
-            else if (imageSize > 8) {
-                res.status(500).json({
-                    error: {
-                        errorMessage: 'please provide user image less then 8 MB'
-                    }
+                res.status(201).json({
+                    success: true,
+                    message: insertMessage
                 })
+            } catch (error) {
+                console.log(error.message)
             }
-            else{
-                cloudinary.config({
-                    cloud_name: process.env.cloud_name,
-                    api_key: process.env.api_key,
-                    api_secret: process.env.api_secret,
-                    secure: true
-                });
-                try {
-                    const result = await cloudinary.uploader.upload(files.image.path);
-                    const insertMessage = await messageModel.create({
-                        senderId: senderId,
-                        senderName: senderName,
-                        reseverId: reseverId,
-                        message: {
-                            text: '',
-                            image: result.url
-                        }
-                    })
-                    res.status(201).json({
-                        success: true,
-                        message: insertMessage
-                    })
-                } catch (error) {
-                    
-                }
-            }
-    
         }
     })
 }
@@ -212,8 +209,8 @@ module.exports.messageSeen = async (req, res) => {
     const messageId = req.body._id;
 
     await messageModel.findByIdAndUpdate(messageId, {
-        status: 'seen'
-    })
+            status: 'seen'
+        })
         .then(() => {
             res.status(200).json({
                 success: true
@@ -232,8 +229,8 @@ module.exports.delivaredMessage = async (req, res) => {
     const messageId = req.body._id;
 
     await messageModel.findByIdAndUpdate(messageId, {
-        status: 'delivared'
-    })
+            status: 'delivared'
+        })
         .then(() => {
             res.status(200).json({
                 success: true

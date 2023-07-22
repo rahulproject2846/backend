@@ -106,8 +106,6 @@ module.exports.userRegister = (req, res) => {
                 res.status(500).json({ error: { errorMessage: ['internal Server Error'] } })
 
             }
-
-
         }
     })
 }
