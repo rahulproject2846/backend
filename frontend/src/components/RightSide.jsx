@@ -50,12 +50,12 @@ const RightSide = (props) => {
                                     </div>
                                 </label>
                                 <div className="icons">
-                                    <div className="icon hide">
+                                    {/* <div className="icon hide">
                                         <IoCall />
                                     </div>
                                     <div className="icon hide">
                                         <BsCameraVideoFill />
-                                    </div>
+                                    </div> */}
                                     <div className="icon">
                                         <label htmlFor="dot">
                                             <div className="hamburger">

@@ -362,7 +362,7 @@ const Messenger = () => {
                         <div className="proparty">
                             <label className="tab-trigger-one" htmlFor="tab1"><BsFillChatFill /><p>Chats</p></label>
 
-                            <label className="tab-trigger-two" htmlFor="tab2"><BsFillCameraVideoFill /><p>Calls</p></label>
+                            {/* <label className="tab-trigger-two" htmlFor="tab2"><BsFillCameraVideoFill /><p>Calls</p></label> */}
 
                             <label className="tab-trigger" htmlFor="tab3"><BsFillPeopleFill /><p>People</p></label>
                         </div>
