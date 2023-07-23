@@ -86,6 +86,10 @@
                 .friends {
                     height: 85%;
 
+                    .firstViewFriends {
+                        left: 32%;
+                    }
+
                     .active-friends {
                         display: flex !important;
                     }
@@ -240,9 +244,8 @@
             }
         }
 
-        .firstView {
+        .firstView, .firstViewFriend {
             display: none !important;
-            color: red !important;
         }
     }
 
